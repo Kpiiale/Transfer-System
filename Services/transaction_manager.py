@@ -45,28 +45,16 @@ class TransactionManager:
         print(f"Transferencia #{transaction_id} creada.")
         message = f"Transferencia #{transaction_id}: ${amount:.2f} de {from_account} para {to_account}"
 
-        # Buscar usuarios involucrados
+        # Buscar usuarios
         to_user = next((u for u in users if u.account_number == to_account), None)
         from_user = next((u for u in users if u.account_number == from_account), None)
 
-        if to_user:
-            # Confirmación al receptor (Direct)
-            send_transaction_confirmation(to_user.username, message)
-
-            # Alerta por tipo y banco (Topic)
-            routing_key = f"{to_user.account_type}.{to_user.bank_code}"
-            send_account_alert(routing_key, message)
-
+        # Confirmaciones directas solamente
         if from_user:
-            # Confirmación al emisor (Direct)
-            send_transaction_confirmation(from_user.username, message)
+            send_transaction_confirmation(from_user.username, f"Tú enviaste: {message}")
 
-            # También podría enviarle alerta por topic si deseas
-            routing_key = f"{from_user.account_type}.{from_user.bank_code}"
-            send_account_alert(routing_key, f"Has enviado: {message}")
-
-        # Fanout para todos
-        broadcast_notification(message)
+        if to_user:
+            send_transaction_confirmation(to_user.username, f"Tú recibiste: {message}")
 
         return transaction
 
