@@ -1,6 +1,6 @@
 import pika
 import os
-from config import settings
+from Config import settings
 from datetime import datetime
 
 def start_direct_consumer(username):
