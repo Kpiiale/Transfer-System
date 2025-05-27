@@ -1,5 +1,5 @@
 import pika
-from config import settings
+from Config import settings
 
 def send_transaction_confirmation(username, message):
     credentials = pika.PlainCredentials(settings.RABBITMQ_USER, settings.RABBITMQ_PASSWORD)
