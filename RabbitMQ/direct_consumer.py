@@ -25,7 +25,7 @@ def start_direct_consumer(username):
     def callback(ch, method, properties, body):
         message = body.decode()
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[Direct] {username} received: {message}")
+        print(f"[Direct] {username} recibido: {message}")
 
         with open(os.path.join(logs_dir, f"direct_{username}.log"), "a") as log_file:
             log_file.write(f"[{timestamp}] {message}\n")

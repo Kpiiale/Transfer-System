@@ -12,5 +12,12 @@
         "account_number": "0001112222",
         "account_type": "ahorros",
         "bank_code": "banco1"
+    },
+    {
+        "username": "Soledad",
+        "password": "Sole8",
+        "account_number": "4566",
+        "account_type": "checking",
+        "bank_code": "banco2"
     }
 ]

@@ -8,7 +8,7 @@ class MessageService:
         self.processes = []
 
     def start_for_user(self, username, account_type, bank_code):
-        print(f"[+] Starting consumers for {username} ({account_type}.{bank_code})")
+        print(f"[+] Iniciando consumidores {username} ({account_type}.{bank_code})")
 
         # Direct confirmation
         p1 = multiprocessing.Process(target=start_direct_consumer, args=(username,))
@@ -27,7 +27,7 @@ class MessageService:
         self.processes.append(p3)
 
     def stop_all(self):
-        print("[x] Stopping all consumers...")
+        print("[x] Deteniendo a todos los consumidores...")
         for p in self.processes:
             p.terminate()
             p.join()

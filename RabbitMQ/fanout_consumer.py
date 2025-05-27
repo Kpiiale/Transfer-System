@@ -23,7 +23,7 @@ def start_fanout_consumer():
     def callback(ch, method, properties, body):
         message = body.decode()
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[Fanout] Received broadcast: {message}")
+        print(f"[Fanout] Transmisión recibida: {message}")
         with open(os.path.join(logs_dir, "fanout.log"), "a") as log_file:
             log_file.write(f"[{timestamp}] {message}\n")
 

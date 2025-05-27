@@ -5,4 +5,4 @@ class Account:
         self.balance = balance
 
     def __str__(self):
-        return f"Account {self.account_id}: {self.owner_username}, Balance: ${self.balance:.2f}"
+        return f"Cuenta {self.account_id}: {self.owner_username}, Fondos: ${self.balance:.2f}"

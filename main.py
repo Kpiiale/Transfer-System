@@ -20,8 +20,8 @@ def create_user(users):
     username = input("Nombre de usuario: ").strip()
     password = input("Contraseña: ").strip()
     account_number = input("Número de cuenta (único): ").strip()
-    account_type = input("Tipo de cuenta (savings/checking): ").strip().lower()
-    bank_code = input("Código del banco (bank1/bank2/...): ").strip().lower()
+    account_type = input("Tipo de cuenta (ahorros/credito): ").strip().lower()
+    bank_code = input("Código del banco (banco1/banco2...): ").strip().lower()
 
     if any(u.username == username or u.account_number == account_number for u in users):
         print("Usuario o número de cuenta ya existe.")

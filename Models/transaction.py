@@ -6,4 +6,4 @@ class Transaction:
         self.amount = amount
 
     def __str__(self):
-        return f"Transaction {self.transaction_id}: ${self.amount:.2f} from {self.from_account} to {self.to_account}"
+        return f"Transferencia {self.transaction_id}: ${self.amount:.2f} de {self.from_account} para {self.to_account}"
