@@ -10,7 +10,7 @@ class MessageService:
     def start_for_user(self, username, account_type, bank_code):
         print(f"[+] Iniciando consumidores {username} ({account_type}.{bank_code})")
 
-        # Direct confirmation
+        # Direct confirmatio
         p1 = multiprocessing.Process(target=start_direct_consumer, args=(username,))
         p1.start()
         self.processes.append(p1)
