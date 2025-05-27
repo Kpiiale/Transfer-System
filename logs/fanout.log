@@ -1,1 +1,2 @@
 [2025-05-27 10:20:58] Transferencia #2: $88.00 de 4566 para 0001112222
+{"type": "transfer_receipt", "transaction_id": 5, "from_account": "0001112222", "to_account": "4566", "amount": 2.0, "timestamp": "2025-05-27 15:45:09", "role": "notification"}

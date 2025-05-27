@@ -1,3 +1,4 @@
 {"raw": "Transferencia #2: $88.00 de 4566 para 0001112222"}
 {"raw": "T\u00fa recibiste: Transferencia #3: $885.00 de 4566 para 0001112222"}
 "T\u00fa enviaste: Transferencia #4: $165.00 de 0001112222 para 4566"
+{"type": "transfer_receipt", "transaction_id": 5, "from_account": "0001112222", "to_account": "4566", "amount": 2.0, "timestamp": "2025-05-27 15:45:09", "role": "sender"}
