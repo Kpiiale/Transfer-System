@@ -17,5 +17,5 @@ def send_transaction_confirmation(username, message):
         body=message.encode()
     )
 
-    print(f"[Direct] Confirmation sent to {username}: {message}")
+    print(f"[Direct] Confirmacion enviada a {username}: {message}")
     connection.close()
