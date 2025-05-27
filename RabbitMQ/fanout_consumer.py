@@ -1,5 +1,6 @@
 import pika
 import os
+import json
 from Config import settings
 from datetime import datetime
 
@@ -21,11 +22,17 @@ def start_fanout_consumer():
     os.makedirs(logs_dir, exist_ok=True)
 
     def callback(ch, method, properties, body):
-        message = body.decode()
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[Fanout] Transmisión recibida: {message}")
-        with open(os.path.join(logs_dir, "fanout.log"), "a") as log_file:
-            log_file.write(f"[{timestamp}] {message}\n")
+        try:
+            message = json.loads(body.decode())
+        except json.JSONDecodeError:
+            message = {"raw": body.decode()}
+
+        print(f"[Fanout] Mensaje recibido:")
+        print(json.dumps(message, indent=2))
+
+        log_file_path = os.path.join(logs_dir, "fanout.log")
+        with open(log_file_path, "a") as log_file:
+            log_file.write(json.dumps(message) + "\n")
 
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     channel.start_consuming()

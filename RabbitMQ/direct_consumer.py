@@ -1,5 +1,6 @@
 import pika
 import os
+import json
 from Config import settings
 from datetime import datetime
 
@@ -18,20 +19,20 @@ def start_direct_consumer(username):
     channel.queue_bind(exchange=settings.EXCHANGE_DIRECT, queue=queue_name, routing_key=username)
 
     logs_dir = os.path.join("logs")
-    transfers_dir = os.path.join("transfers")
     os.makedirs(logs_dir, exist_ok=True)
-    os.makedirs(transfers_dir, exist_ok=True)
 
     def callback(ch, method, properties, body):
-        message = body.decode()
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[Direct] {username} recibido: {message}")
+        try:
+            message = json.loads(body.decode())
+        except json.JSONDecodeError:
+            message = {"raw": body.decode()}
 
-        with open(os.path.join(logs_dir, f"direct_{username}.log"), "a") as log_file:
-            log_file.write(f"[{timestamp}] {message}\n")
+        print(f"[Direct] {username} recibió:")
+        print(json.dumps(message, indent=2))
 
-        with open(os.path.join(transfers_dir, f"{username}_transfers.txt"), "a") as tx_file:
-            tx_file.write(f"[{timestamp}] {message}\n")
+        log_file_path = os.path.join(logs_dir, f"direct_{username}.log")
+        with open(log_file_path, "a") as log_file:
+            log_file.write(json.dumps(message) + "\n")
 
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     channel.start_consuming()

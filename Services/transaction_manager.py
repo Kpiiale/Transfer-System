@@ -4,6 +4,7 @@ from Models.transaction import Transaction
 from RabbitMQ.direct_producer import send_transaction_confirmation
 from RabbitMQ.fanout_producer import broadcast_notification
 from RabbitMQ.topic_producer import send_account_alert
+from datetime import datetime
 
 TRANSACTION_FILE = "Data/transactions.json"
 
@@ -43,18 +44,43 @@ class TransactionManager:
         self.save_transactions()
 
         print(f"Transferencia #{transaction_id} creada.")
-        message = f"Transferencia #{transaction_id}: ${amount:.2f} de {from_account} para {to_account}"
+
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Buscar usuarios
         to_user = next((u for u in users if u.account_number == to_account), None)
         from_user = next((u for u in users if u.account_number == from_account), None)
 
-        # Confirmaciones directas solamente
+        # Crear JSON base
+        base_receipt = {
+            "type": "transfer_receipt",
+            "transaction_id": transaction_id,
+            "from_account": from_account,
+            "to_account": to_account,
+            "amount": amount,
+            "timestamp": timestamp
+        }
+
         if from_user:
-            send_transaction_confirmation(from_user.username, f"Tú enviaste: {message}")
+            sender_receipt = base_receipt.copy()
+            sender_receipt["role"] = "sender"
+            send_transaction_confirmation(from_user.username, sender_receipt)
 
         if to_user:
-            send_transaction_confirmation(to_user.username, f"Tú recibiste: {message}")
+            receiver_receipt = base_receipt.copy()
+            receiver_receipt["role"] = "receiver"
+            send_transaction_confirmation(to_user.username, receiver_receipt)
+
+            # Topic alert
+            routing_key = f"{to_user.account_type}.{to_user.bank_code}"
+            alert_receipt = base_receipt.copy()
+            alert_receipt["role"] = "notification"
+            send_account_alert(routing_key, alert_receipt)
+
+        # Fanout to all
+        fanout_receipt = base_receipt.copy()
+        fanout_receipt["role"] = "notification"
+        broadcast_notification(fanout_receipt)
 
         return transaction
 

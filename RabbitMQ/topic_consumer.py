@@ -1,5 +1,6 @@
 import pika
 import os
+import json
 from Config import settings
 from datetime import datetime
 
@@ -21,12 +22,17 @@ def start_topic_consumer(binding_key):
     os.makedirs(logs_dir, exist_ok=True)
 
     def callback(ch, method, properties, body):
-        message = body.decode()
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[Topic] Recibido por {binding_key}: {message}")
+        try:
+            message = json.loads(body.decode())
+        except json.JSONDecodeError:
+            message = {"raw": body.decode()}
+
+        print(f"[Topic] Mensaje recibido ({binding_key}):")
+        print(json.dumps(message, indent=2))
+
         log_file_path = os.path.join(logs_dir, f"topic_{binding_key.replace('.', '_')}.log")
         with open(log_file_path, "a") as log_file:
-            log_file.write(f"[{timestamp}] {message}\n")
+            log_file.write(json.dumps(message) + "\n")
 
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     channel.start_consuming()

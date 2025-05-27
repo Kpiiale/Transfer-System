@@ -1,7 +1,8 @@
 import pika
+import json
 from Config import settings
 
-def send_transaction_confirmation(username, message):
+def send_transaction_confirmation(username, receipt_obj):
     credentials = pika.PlainCredentials(settings.RABBITMQ_USER, settings.RABBITMQ_PASSWORD)
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=settings.RABBITMQ_HOST,
@@ -14,8 +15,8 @@ def send_transaction_confirmation(username, message):
     channel.basic_publish(
         exchange=settings.EXCHANGE_DIRECT,
         routing_key=username,
-        body=message.encode()
+        body=json.dumps(receipt_obj).encode()
     )
 
-    print(f"[Direct] Confirmacion enviada a {username}: {message}")
+    print(f"[Direct] Confirmación enviada a {username}: {receipt_obj}")
     connection.close()
