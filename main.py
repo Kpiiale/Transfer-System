@@ -3,6 +3,8 @@ import os
 from Models.user import User
 from Services.auth_service import login
 from Services.transaction_manager import TransactionManager
+from RabbitMQ.message_service import MessageService
+
 
 USERS_FILE = "Data/users.json"
 
@@ -70,7 +72,7 @@ def main_menu(user, users):
                     from_acc = user.account_number
                     to_acc = input("Número de cuenta destino: ").strip()
                     amount = float(input("Monto a transferir: "))
-                    tx = tx_manager.create_transaction(from_acc, to_acc, amount)
+                    tx = tx_manager.create_transaction(from_acc, to_acc, amount, users)
                     print(f"Transferencia realizada: {tx}")
 
                 elif option == "2":
