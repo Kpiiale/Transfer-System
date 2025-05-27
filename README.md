@@ -31,4 +31,4 @@ Este archivo levanta un servidor de RabbitMQ local con panel web.
 - URL de acceso: http://localhost:15672
 ###
 
-## Para ejecutar el programa corre main.py
+### Para ejecutar el programa corre main.py
