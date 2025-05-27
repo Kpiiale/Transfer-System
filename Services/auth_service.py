@@ -1,10 +1,10 @@
 def login(users):
-    username = input("Username: ").strip()
-    password = input("Password: ").strip()
+    username = input("Usuario: ").strip()
+    password = input("Contraseña: ").strip()
 
     for user in users:
         if user.username == username and user.password == password:
-            print(f"Welcome {user.username} ({user.account_type})")
+            print(f"Bienvenido {user.username} ({user.account_type})")
             return user
-    print("Invalid credentials.")
+    print("Credenciales invalidas.")
     return None

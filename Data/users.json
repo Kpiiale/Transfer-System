@@ -1,0 +1,14 @@
+[
+    {
+        "username": "admin",
+        "password": "admin",
+        "account_type": "admin",
+        "bank_code": "banco0"
+    },
+    {
+        "username": "yulissa",
+        "password": "Yul123",
+        "account_type": "ahorros",
+        "bank_code": "banco1"
+    }
+]
