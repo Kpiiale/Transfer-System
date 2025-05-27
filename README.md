@@ -21,7 +21,7 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 ### Archivo docker-compose.yml
 Este archivo levanta un servidor de RabbitMQ local con panel web.
 
-para levantar RabbitMQ con Docker
+### Para levantar RabbitMQ con Docker
 
 - Abre la terminal de Docker Desktop
 - Ubícate en la carpeta del proyecto 
