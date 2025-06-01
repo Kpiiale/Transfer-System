@@ -1,0 +1,4 @@
+{
+  "connection_string": "Endpoint=sb://udlatestbus.servicebus.windows.net/;SharedAccessKeyName=recibir_tareax2;SharedAccessKey=******;EntityPath=tareas"
+}
+

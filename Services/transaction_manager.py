@@ -7,7 +7,7 @@ from datetime import datetime
 from Models.transaction import Transaction
 
 # Importamos funciones que permiten enviar mensajes a través de RabbitMQ
-from RabbitMQ.direct_producer import send_transaction_confirmation
+from AzureESB.direct_producer import send_transaction_confirmation
 from RabbitMQ.fanout_producer import broadcast_notification
 from RabbitMQ.topic_producer import send_account_alert
 
