@@ -4,12 +4,14 @@ import random
 from datetime import datetime, timezone
 from azure.servicebus import ServiceBusClient, ServiceBusMessage
 
+# Cargar configuración
 with open("config.json") as f:
     config = json.load(f)
 
 conn_str = config["SERVICE_BUS_CONNECTION_STR"]
 queue_name = config["QUEUE_NAME"]
 
+# Simulación de sensores
 def generar_alerta_sensor():
     tipo = random.choice(["temperatura", "presion", "vibracion"])
     umbrales = {"temperatura": 90.0, "presion": 150.0, "vibracion": 5.0}
@@ -25,6 +27,7 @@ def generar_alerta_sensor():
         "location": random.choice(["Planta 1", "Planta 2", "Planta 3"])
     }
 
+# Enviar alerta
 alerta = generar_alerta_sensor()
 
 servicebus_client = ServiceBusClient.from_connection_string(conn_str)
