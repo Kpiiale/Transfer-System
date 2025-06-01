@@ -1,12 +1,14 @@
 import json
 from azure.servicebus import ServiceBusClient
 
+# Cargar configuración
 with open("config.json") as f:
     config = json.load(f)
 
 conn_str = config["SERVICE_BUS_CONNECTION_STR"]
 queue_name = config["QUEUE_NAME"]
 
+# Recibir y procesar alerta
 servicebus_client = ServiceBusClient.from_connection_string(conn_str)
 
 with servicebus_client:
