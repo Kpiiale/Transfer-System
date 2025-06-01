@@ -1,0 +1,5 @@
+{
+    "SERVICE_BUS_CONNECTION_STR": "Endpoint=sb://TU-NAMESPACE.servicebus.windows.net/;SharedAccessKeyName=gestor-policy;SharedAccessKey=TU-CLAVE",
+    "QUEUE_NAME": "incidentes-iot"
+  }
+
